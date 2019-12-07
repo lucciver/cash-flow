@@ -1,0 +1,42 @@
+﻿@page "/accounts"
+@inject IAccountService accountService
+
+<h3>Accounts</h3>
+
+@if (accounts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Created at</th>
+                <th>Modified at</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var account in accounts)
+            {
+            <tr>
+                <td>@account.Name</td>
+                <td>@account.Type</td>
+                <td>@account.DateCreated</td>
+                <td>@account.DateModified</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+private Account[] accounts;
+
+protected override async Task OnInitializedAsync()
+{
+    accounts = await accountService.GetAccounts();
+}
+}

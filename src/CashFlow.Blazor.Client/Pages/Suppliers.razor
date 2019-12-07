@@ -1,0 +1,42 @@
+﻿@page "/suppliers"
+@inject ISupplierService supplierService
+
+<h3>Suppliers</h3>
+
+@if (suppliers == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Name</th>
+                <th>Contact info</th>
+                <th>Created at</th>
+                <th>Modified at</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var supplier in suppliers)
+            {
+            <tr>
+                <td>@supplier.Name</td>
+                <td>@supplier.ContactInfo</td>
+                <td>@supplier.DateCreated</td>
+                <td>@supplier.DateModified</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+private Supplier[] suppliers;
+
+protected override async Task OnInitializedAsync()
+{
+    suppliers = await supplierService.GetSuppliers();
+}
+}
